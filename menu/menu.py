@@ -1,7 +1,8 @@
 import time
-from creature.main_creature_menu import MainCreatureMenu
-from colorama import Fore, init
+from colorama import Fore, init, Style
 from game.game import game
+from creature.creature_manager import CreatureManager
+from creature.creature_menu import creature_menu
 
 init(autoreset=True)
 
@@ -27,31 +28,35 @@ class Menu:
         self.running = True
 
     def display_menu(self):
-        print(Fore.BLUE + "\nBienvenue dans le jeu de Tamagotchi !" + "\n")
-        print("1. Jouer")
-        print("2. Créer ou charger une créature")
-        print("3. Quitter" + "\n")
+        print(Fore.BLUE + "\nWelcome to the Tamagotchi game!" + "\n")
+        print("1. Play, " + Fore.YELLOW + "Your stats decrease automatically even if they don't visibly decrease in real-time.")
+        print("2. Create a creature that you can charge when you enter play.")
+        print("3. Exit\n")
 
     def handle_choice(self, choice):
         match choice:
             case "1":
-                print("\nLancement du jeu...")
+                print("\nStarting the game...")
                 time.sleep(0.5)
                 game()
             case "2":
-                MainCreatureMenu().display_menu()
+                    creature = creature_menu()
+                    print(Fore.BLUE + Style.BRIGHT + "\nVoulez-vous sauvegarder cette créature ?")
+                    CreatureManager().save_creature(creature)
+                    print(Fore.GREEN + Style.BRIGHT + "La créature a été sauvegardée avec succès !")
+
             case "3":
-                print("\nMerci d'avoir joué !")
+                print("\nThank you for playing!")
                 self.running = False
             case _:
-                print(Fore.RED + "Choix invalide, veuillez réessayer.")
+                print(Fore.RED + "Invalid choice, please try again.")
 
     def run(self):
         try:
             display_ascii_art()
             while self.running:
                 self.display_menu()
-                choice = input(Fore.BLUE + "Quel est votre choix ?" + "\n")
+                choice = input(Fore.BLUE + "What is your choice?" + "\n")
                 self.handle_choice(choice)
         except KeyboardInterrupt:
-            print("\nFin du programme. Merci d'avoir joué !")
+            print("\nProgram terminated. Thank you for playing!")

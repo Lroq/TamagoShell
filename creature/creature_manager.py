@@ -39,7 +39,7 @@ class CreatureManager:
 
     def load_creatures(self):
         if not os.path.exists(self.save_file):
-            print(Fore.YELLOW + "\n⚠️ No save file found.")
+            print(Fore.YELLOW + "\n⚠️  No save file found.")
             return None
 
         try:
@@ -47,7 +47,7 @@ class CreatureManager:
                 data = json.load(file)
 
             if not data:
-                print(Fore.YELLOW + "\n⚠️ No saved creatures found.")
+                print(Fore.YELLOW + "\n⚠️  No saved creatures found.")
                 return None
 
             print(Fore.BLUE + "\n📜 List of saved creatures:")
@@ -66,23 +66,30 @@ class CreatureManager:
                     Fore.BLUE
                     + f"{index}. 🛡️  Name: {name} | ⚡ species: {creature_species} | ❤️  Health: {health} | 🍔 Hunger: {hunger} | 🕒 Age: {age} | 🧬 Alive: {is_alive} | 🔋 Energy: {energy} | 😊 Happiness: {happiness} | 🏥 Sanity: {sanity}"
                 )
+
+            print(Fore.GREEN + "\nYou can go back to the main menu to create your creature...")
+
             while True:
                 try:
-                    choice = int(
-                        input(
-                            Fore.GREEN
-                            + "\n➡️  Enter the number of the creature to select: "
-                        )
+                    choice = input(
+                        Fore.GREEN
+                        + "\n➡️  Enter the number of the creature to select, or 'back' to go back: "
                     )
+                    if choice.lower() == "back":
+                        return None
+                    choice = int(choice)
                     if 1 <= choice <= len(data):
                         print(Fore.GREEN + "\n✅ Creature successfully loaded!")
                         return data[choice - 1]
                     else:
                         print(Fore.RED + "\n❌ Invalid number. Please try again.")
                 except ValueError:
+                    if choice.lower() == "back":
+                        print(Fore.YELLOW + "\n↩️ Returning to the main menu...")
+                        return None
                     print(
                         Fore.RED
-                        + "\n❌ Invalid input. Please enter a number from the list."
+                        + "\n❌ Invalid input. Please enter a number from the list or 'back' to go back."
                     )
 
         except Exception as e:

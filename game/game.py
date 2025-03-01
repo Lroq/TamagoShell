@@ -10,7 +10,6 @@ from datetime import datetime, timedelta
 
 current_creature = None
 init(autoreset=True)
-
 current_time = datetime.now()
 
 def update_time():
@@ -19,9 +18,29 @@ def update_time():
         time.sleep(1)  # 1 second IRL
         current_time += timedelta(minutes=10)  # 10 minutes in-game
 
+def decrease_stats():
+    global current_creature
+    while current_creature and current_creature.is_alive:
+        time.sleep(10)
+
+        current_creature.hunger = max(0, current_creature.hunger - 5)
+        current_creature.energy = max(0, current_creature.energy - 2)
+        current_creature.sanity = max(0, current_creature.sanity - 4)
+        current_creature.health = max(0, current_creature.health - 3)
+
+        if current_creature.health <= 5 and current_creature.health > 0:
+            print(Fore.RED + "\n⚠️ WARNING: Your creature is critically low on health! ⚠️")
+
+        if current_creature.health <= 0:
+            print(Fore.RED + "\n💀 Game Over! Your creature has died... 💀")
+            print(Fore.RED + "Better luck next time! 🥀")
+            current_creature.is_alive = False
+            break
+
 def display_ui():
     os.system('cls' if os.name == 'nt' else 'clear')
     current_creature.display()
+
     print(f"{Fore.YELLOW}Today is {current_time.strftime('%Y-%m-%d')} and the time is {current_time.strftime('%H:%M')}\n")
     print(Fore.BLUE + "What would you like to do with your creature:")
     print(Fore.BLUE + Style.BRIGHT + "1. Eat")
@@ -39,11 +58,12 @@ def game():
         try:
             creature_data.pop('type', None)
             current_creature = Creature(**creature_data)
+            threading.Thread(target=decrease_stats, daemon=True).start()
             game_loop()
         except TypeError as e:
             print(f"Error while creating the creature: {e}")
     else:
-        print("No creature loaded.")
+        return
 
 def game_loop():
     global current_creature, current_time
@@ -66,6 +86,7 @@ def game_loop():
                 Actions().update_health(current_creature)
                 current_time += timedelta(hours=random.randint(1, 24))
             case "5":
+                current_creature.age = 50
                 Actions().go_to_bar(current_creature)
                 current_time += timedelta(hours=6)
             case _:
