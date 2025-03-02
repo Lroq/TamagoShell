@@ -43,7 +43,7 @@ class Actions:
             current_creature.hunger = self.check_limits(current_creature.hunger)
             current_creature.health += 10
             current_creature.health = self.check_limits(current_creature.health)
-            current_creature.sanity += 10
+            current_creature.sanity -= 10
             current_creature.sanity = self.check_limits(current_creature.sanity)
 
             time.sleep(3)
@@ -57,11 +57,13 @@ class Actions:
 
     def sleep(self, current_creature):
         print(Fore.BLUE + "\nYour creature is now sleeping... 💤")
-        print(f"Before: Health: {current_creature.health}, Energy: {current_creature.energy}")
+        print(f"Before: Health: {current_creature.health}, Energy: {current_creature.energy}, Hungry: {current_creature.hunger}")
         current_creature.energy += 10
         current_creature.energy = self.check_limits(current_creature.energy)
         current_creature.health += 10
         current_creature.health = self.check_limits(current_creature.health)
+        current_creature.hunger -= 10
+        current_creature.hunger = self.check_limits(current_creature.hunger)
 
         time.sleep(3)
         print(f"After: Health: {current_creature.health}, Energy: {current_creature.energy}")
@@ -113,8 +115,6 @@ class Actions:
 
         if current_creature.health == 5:
             print(Fore.RED + "ALERT: Your creature is exhausted! It needs rest or food.")
-
-        input("Press Enter to continue...")
 
     def go_to_bar(self, current_creature):
         if current_creature.age < 18:
