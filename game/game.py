@@ -68,7 +68,7 @@ def game():
 def game_loop():
     global current_creature, current_time
     while current_creature.is_alive:
-        display_ui()  # Affichage des stats avant l'action de l'utilisateur
+        display_ui()
 
         choice = input("\nWhat activity would you like to do?\n")
 
@@ -96,4 +96,3 @@ def game_loop():
 
         time.sleep(1)
         display_ui()
-
