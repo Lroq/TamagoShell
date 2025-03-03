@@ -39,7 +39,7 @@ class CreatureManager:
 
     def load_creatures(self):
         if not os.path.exists(self.save_file):
-            print(Fore.YELLOW + "\n⚠️  No save file found.")
+            print(Fore.YELLOW + "\n⚠️  No save file found, you must create pet first")
             return None
 
         try:
