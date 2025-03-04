@@ -1,4 +1,6 @@
 import time
+import sys
+import os
 from colorama import Fore, init, Style
 from game.game import game
 from creature.creature_manager import CreatureManager
@@ -14,7 +16,7 @@ def display_ascii_art():
         r" | |   | |  /\_/\  ",
         " | |___| | ( o.o ) ",
         " |_______|  > ^ <  ",
-        "  Tamagochi School! ",
+        "  Tamagotchi School! ",
     ]
 
     for line in art:
@@ -41,9 +43,9 @@ class Menu:
                 game()
             case "2":
                     creature = creature_menu()
-                    print(Fore.BLUE + Style.BRIGHT + "\nVoulez-vous sauvegarder cette créature ?")
+                    print(Fore.BLUE + Style.BRIGHT + "\nDo you want to save you creature ?")
                     CreatureManager().save_creature(creature)
-                    print(Fore.GREEN + Style.BRIGHT + "La créature a été sauvegardée avec succès !")
+                    print(Fore.GREEN + Style.BRIGHT + "Your creature has been saved successfully!")
 
             case "3":
                 print("\nThank you for playing!")
@@ -56,7 +58,13 @@ class Menu:
             display_ascii_art()
             while self.running:
                 self.display_menu()
-                choice = input(Fore.BLUE + "What is your choice?" + "\n")
+                try:
+                    if sys.stdin.closed:
+                        sys.stdin = open(os.devnull)
+                    choice = input(Fore.BLUE + "What is your choice?" + "\n")
+                except EOFError:
+                    print("\nInput stream closed. Exiting.")
+                    break
                 self.handle_choice(choice)
         except KeyboardInterrupt:
             print("\nProgram terminated. Thank you for playing!")

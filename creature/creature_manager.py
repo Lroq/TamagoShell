@@ -26,7 +26,6 @@ class CreatureManager:
             creature.setdefault("age", 1)
             creature.setdefault("energy", 100)
             creature.setdefault("happiness", 100)
-            creature.setdefault("sanity", 100)
 
             data.append(creature)
 
@@ -59,12 +58,11 @@ class CreatureManager:
                 age = creature.get("age", 1)
                 energy = creature.get("energy", 100)
                 happiness = creature.get("happiness", 100)
-                sanity = creature.get("sanity", 100)
 
                 is_alive = creature.get("is_alive", True)
                 print(
                     Fore.BLUE
-                    + f"{index}. 🛡️  Name: {name} | ⚡ species: {creature_species} | ❤️  Health: {health} | 🍔 Hunger: {hunger} | 🕒 Age: {age} | 🧬 Alive: {is_alive} | 🔋 Energy: {energy} | 😊 Happiness: {happiness} | 🏥 Sanity: {sanity}"
+                    + f"{index}. 🛡️  Name: {name} | ⚡ species: {creature_species} | ❤️  Health: {health} | 🍔 Hunger: {hunger} | 🕒 Age: {age} | 🧬 Alive: {is_alive} | 🔋 Energy: {energy} | 😊 Happiness: {happiness}"
                 )
 
             print(Fore.GREEN + "\nYou can go back to the main menu to create your creature...")

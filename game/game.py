@@ -25,8 +25,7 @@ def decrease_stats():
 
         current_creature.hunger = max(0, current_creature.hunger - 5)
         current_creature.energy = max(0, current_creature.energy - 2)
-        current_creature.sanity = max(0, current_creature.sanity - 4)
-        current_creature.health = max(0, current_creature.health - 3)
+        current_creature.health = max(0, current_creature.health - 5)
 
         if current_creature.health <= 5 and current_creature.health > 0:
             print(Fore.RED + "\n⚠️ WARNING: Your creature is critically low on health! ⚠️")
@@ -35,7 +34,8 @@ def decrease_stats():
             print(Fore.RED + "\n💀 Game Over! Your creature has died... 💀")
             print(Fore.RED + "Better luck next time! 🥀")
             current_creature.is_alive = False
-            break
+            time.sleep(2)
+            exit()
 
 def display_ui():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -86,9 +86,8 @@ def game_loop():
                 Actions().update_health(current_creature)
                 current_time += timedelta(hours=random.randint(1, 24))
             case "5":
-                current_creature.age = 50
                 Actions().go_to_bar(current_creature)
-                current_time += timedelta(hours=6)
+                current_time += timedelta(hours=random.random.randit(1, 6))
             case _:
                 print("Invalid choice. Please try again.")
                 time.sleep(1)

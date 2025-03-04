@@ -38,16 +38,14 @@ class Actions:
 
         if food:
             print(Fore.BLUE + f"\nThe chosen food is {food}, it's a delight! 🍽️\n")
-            print(f"Before: Hunger: {current_creature.hunger}, Health: {current_creature.health}, Sanity: {current_creature.sanity}")
+            print(f"Before: Hunger: {current_creature.hunger}, Health: {current_creature.health}")
             current_creature.hunger += 10
             current_creature.hunger = self.check_limits(current_creature.hunger)
             current_creature.health += 10
             current_creature.health = self.check_limits(current_creature.health)
-            current_creature.sanity -= 10
-            current_creature.sanity = self.check_limits(current_creature.sanity)
 
             time.sleep(3)
-            print(f"After: Hunger: {current_creature.hunger}, Health: {current_creature.health}, Sanity: {current_creature.sanity}")
+            print(f"After: Hunger: {current_creature.hunger}, Health: {current_creature.health}")
             time.sleep(2)
             os.system('cls' if os.name == 'nt' else 'clear')
             return food
@@ -66,7 +64,7 @@ class Actions:
         current_creature.hunger = self.check_limits(current_creature.hunger)
 
         time.sleep(3)
-        print(f"After: Health: {current_creature.health}, Energy: {current_creature.energy}")
+        print(f"After: Health: {current_creature.health}, Energy: {current_creature.energy}, Hungry: {current_creature.hunger}")
         time.sleep(3)
         os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -82,27 +80,26 @@ class Actions:
         print("╔════════════════════════════════════════╗")
         print("║        Playing... Getting excited!     ║")
         print("╚════════════════════════════════════════╝")
-        print(f"Before: Happiness: {current_creature.happiness}, Energy: {current_creature.energy}, Sanity: {current_creature.sanity}, Health: {current_creature.health}")
+        print(f"Before: Happiness: {current_creature.happiness}, Energy: {current_creature.energy}, Health: {current_creature.health}")
         current_creature.happiness += 10
         current_creature.happiness = self.check_limits(current_creature.happiness)
         current_creature.energy -= 5
         current_creature.energy = self.check_limits(current_creature.energy)
         current_creature.health -= 12
         current_creature.health = self.check_limits(current_creature.health)
-        current_creature.sanity -= 10
-        current_creature.sanity = self.check_limits(current_creature.sanity)
 
-        time.sleep(5)
-        print(f"After: Happiness: {current_creature.happiness}, Energy: {current_creature.energy}, Sanity: {current_creature.sanity}, Health: {current_creature.health}")
+        time.sleep(3)
 
         new_creature = Creature(name="DefaultName", species="DefaultSpecies", accessories="DefaultAccessories")
-        if new_creature.random_event():
+        if random.randint(1, 5) == 1:  # 1/5 chance
+            new_creature.random_event()
             print(Fore.MAGENTA + "I found something exciting! Wuwu! 🎉")
-            time.sleep(2)
         else:
             print(Fore.RED + "Nothing found, just chilling... 😌")
-            time.sleep(2)
-            os.system('cls' if os.name == 'nt' else 'clear')
+
+        print(f"After: Happiness: {current_creature.happiness}, Energy: {current_creature.energy}, Health: {current_creature.health}")
+        time.sleep(2)
+        os.system('cls' if os.name == 'nt' else 'clear')
 
     def update_health(self, current_creature):
         if current_creature.health < 100:
@@ -132,16 +129,14 @@ class Actions:
             self.reproduce(current_creature)
         else:
             print(Fore.RED + "You had a drink, but didn't meet anyone interesting... 🍺")
-            print(f"Before: Happiness: {current_creature.happiness}, Energy: {current_creature.energy}, Sanity: {current_creature.sanity}")
+            print(f"Before: Happiness: {current_creature.happiness}, Energy: {current_creature.energy}")
             current_creature.happiness += 5
             current_creature.happiness = self.check_limits(current_creature.happiness)
             current_creature.energy -= 5
             current_creature.energy = self.check_limits(current_creature.energy)
-            current_creature.sanity -= 20
-            current_creature.sanity = self.check_limits(current_creature.sanity)
 
             time.sleep(3)
-            print(f"After: Happiness: {current_creature.happiness}, Energy: {current_creature.energy}, Sanity: {current_creature.sanity}")
+            print(f"After: Happiness: {current_creature.happiness}, Energy: {current_creature.energy}")
         time.sleep(3)
 
         new_creature = Creature(name="DefaultName", species="DefaultSpecies", accessories="DefaultAccessories")
